@@ -2,7 +2,6 @@ package com.myCompany.hotel.hotel_management_system.Controllers;
 
 import com.myCompany.hotel.hotel_management_system.Models.User;
 import com.myCompany.hotel.hotel_management_system.Repositoris.User_Rep;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
