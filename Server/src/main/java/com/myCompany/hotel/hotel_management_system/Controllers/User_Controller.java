@@ -22,9 +22,10 @@ public class User_Controller {
     }
 
     @GetMapping("/{id}")
-    User GetById(@PathVariable Long id){
+    User GetById(@PathVariable("id") Long id){
         return repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found."));
     }
+
 
     @PostMapping
     User Post(@RequestBody User user){
@@ -32,7 +33,7 @@ public class User_Controller {
     }
 
     @PutMapping("/{id}")
-    User Put(@PathVariable Long id, @RequestBody User updatedUser){
+    User Put(@PathVariable("id") Long id, @RequestBody User updatedUser){
         User user = repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         user.setUserName(updatedUser.getUserName());
         user.setEmail(updatedUser.getEmail());
@@ -41,7 +42,7 @@ public class User_Controller {
     }
 
     @DeleteMapping("/{id}")
-    void Delete(@PathVariable Long id){
+    void Delete(@PathVariable("id") Long id){
         repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         repo.deleteById(id);
     }

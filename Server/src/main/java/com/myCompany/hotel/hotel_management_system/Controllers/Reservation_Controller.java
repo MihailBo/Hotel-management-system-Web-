@@ -22,17 +22,18 @@ public class Reservation_Controller {
     }
 
     @GetMapping("/{id}")
-    Reservation GetById(@PathVariable Long id){
+    Reservation GetById(@PathVariable("id") Long id){
         return repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found."));
     }
 
     @PostMapping
     Reservation Post(@RequestBody Reservation reservation){
+
         return repo.save(reservation);
     }
 
     @PutMapping("/{id}")
-    Reservation Put(@PathVariable Long id, @RequestBody Reservation newReservation){
+    Reservation Put(@PathVariable("id") Long id, @RequestBody Reservation newReservation){
 
         Reservation reservation = repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         reservation.setStatus(newReservation.getStatus());
@@ -46,7 +47,7 @@ public class Reservation_Controller {
     }
 
     @DeleteMapping("/{id}")
-    void Delete(@PathVariable Long id){
+    void Delete(@PathVariable("id") Long id){
         repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         repo.deleteById(id);
     }

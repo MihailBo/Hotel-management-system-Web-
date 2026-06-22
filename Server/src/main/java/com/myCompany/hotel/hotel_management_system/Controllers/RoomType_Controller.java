@@ -18,11 +18,12 @@ public class RoomType_Controller {
 
     @GetMapping
     List<Room_type> GetAll(){
+
         return repo.findAll();
     }
 
     @GetMapping("/{id}")
-    Room_type GetById(@PathVariable Long id){
+    Room_type GetById(@PathVariable("id") Long id){
         return  repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
     }
 
@@ -31,14 +32,14 @@ public class RoomType_Controller {
         return repo.save(roomType);
     }
     @PutMapping
-    Room_type Put(@PathVariable Long id, @RequestBody Room_type newRoomType){
+    Room_type Put(@PathVariable("id") Long id, @RequestBody Room_type newRoomType){
         Room_type roomType = repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         roomType.setDescription(newRoomType.getDescription());
         roomType.setName(newRoomType.getName());
         return repo.save(roomType);
     }
     @DeleteMapping("/{id}")
-    void Delete(@PathVariable Long id){
+    void Delete(@PathVariable("id") Long id){
         repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         repo.deleteById(id);
     }

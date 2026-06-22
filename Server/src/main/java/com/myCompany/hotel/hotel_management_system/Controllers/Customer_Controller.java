@@ -24,9 +24,8 @@ public class Customer_Controller {
     }
 
     @GetMapping("/{id}")
-    public Customer GetById(@PathVariable Long id) {
+    public Customer GetById(@PathVariable("id") Long id) {
         return repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
-
     }
 
     @PostMapping
@@ -34,8 +33,8 @@ public class Customer_Controller {
         return repo.save(customer);
     }
 
-    @PutMapping
-    public Customer Put(@PathVariable Long id, @RequestBody Customer updatedCustomer) {
+    @PutMapping("/{id}")
+    public Customer Put(@PathVariable("id") Long id, @RequestBody Customer updatedCustomer) {
         Customer customer = repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found."));
         customer.setEmail(updatedCustomer.getEmail());
         customer.setFirst_name(updatedCustomer.getFirst_name());
@@ -47,7 +46,7 @@ public class Customer_Controller {
     }
 
     @DeleteMapping("/{id}")
-    void DeleteById(@PathVariable Long id) {
+    void DeleteById(@PathVariable("id") Long id) {
         repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         repo.deleteById(id);
     }
