@@ -1,6 +1,5 @@
 package com.myCompany.hotel.hotel_management_system.Models;
 
-import com.myCompany.hotel.hotel_management_system.Enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,8 +15,6 @@ public class Room {
     private Long id;
     private int roomNum;
     private double pricePerNight;
-    @Enumerated(EnumType.STRING)
-    private OrderStatus status;
     @ManyToOne
     @JoinColumn(name = "room_type_id") // foreign key
     private Room_type roomType;

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.myCompany.hotel.hotel_management_system.Enums.OrderStatus.AVAILABLE;
-import static com.myCompany.hotel.hotel_management_system.Enums.OrderStatus.OCCUPIED;
 
 @RestController
 @RequestMapping("/room")
@@ -44,7 +42,6 @@ public class Room_Controller {
      Room room = repo.findById(id).orElseThrow(() -> new RuntimeException("Id not found."));
      room.setRoomNum(updatedRoom.getRoomNum());
      room.setPricePerNight(updatedRoom.getPricePerNight());
-     room.setStatus(updatedRoom.getStatus());
      return repo.save(room);
     }
 
@@ -60,12 +57,6 @@ public class Room_Controller {
 
         Room room = repo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Room not found"));
-
-        if (!room.getStatus().equals(AVAILABLE)) {
-            throw new RuntimeException("Room is not available");
-        }
-
-        room.setStatus(OCCUPIED);
         return repo.save(room);
     }
 }

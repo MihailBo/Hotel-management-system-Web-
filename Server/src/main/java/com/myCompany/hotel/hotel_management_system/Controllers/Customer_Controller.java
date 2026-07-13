@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin(origins = "http://localhost:63342")
 public class Customer_Controller {
 
     private Customer_Rep repo;
@@ -19,7 +20,6 @@ public class Customer_Controller {
 
     @GetMapping
     public List<Customer> GetAll() {
-
         return repo.findAll();
     }
 
@@ -41,6 +41,7 @@ public class Customer_Controller {
         customer.setLast_name(updatedCustomer.getLast_name());
         customer.setPhoneNum(updatedCustomer.getPhoneNum());
         customer.setIdCard_id(updatedCustomer.getIdCard_id());
+        customer.setPassword(updatedCustomer.getPassword());
 
         return repo.save(customer);
     }

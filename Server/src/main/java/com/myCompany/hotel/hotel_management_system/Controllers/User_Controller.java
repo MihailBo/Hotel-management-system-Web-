@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "http://localhost:63344")
 public class User_Controller {
 
     private User_Rep repo;
