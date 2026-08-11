@@ -1,0 +1,180 @@
+/* webpackIgnore: true */
+
+#cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#bookingInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#contactInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#hero {
+  color: white;
+  margin: 0;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  animation: Slideshow 15s infinite;
+}
+
+@keyframes Slideshow {
+  0% {
+    background-image: var(--hero1);
+  }
+
+  50% {
+    background-image: var(--hero2);
+  }
+
+  100% {
+    background-image: var(--hero3);
+  }
+}
+
+.mainText {
+  margin-top: 30px;
+  font-size: 65px;
+}
+
+#text {
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+#dealsBtn {
+  width: 300px;
+  height: 50px;
+}
+
+#title1 {
+  color: chocolate;
+}
+
+#title2 {
+  color: chocolate;
+}
+
+#title3 {
+  color: chocolate;
+}
+
+.body1 {
+  color: grey;
+}
+
+.card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  border: chocolate 2px solid;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  width: 350px;
+  height: 140px;
+  padding: 20px;
+  margin: 10px;
+  color:aliceblue;
+}
+
+.box:hover {
+  box-shadow: 0 0 20px chocolate;
+  transform: scale(1.03);
+}
+
+.innerBox {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.textOfBox {
+  color: grey;
+}
+
+#boxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+#location {
+  display: flex;
+  flex-direction: row;
+  align-content: space-around;
+  margin-top: 50px;
+}
+
+#carouselExample {
+  background-size: cover;
+}
+
+#loginInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#singUpInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+#lower {
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.lowBox {
+  width: 350px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.main-content {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background-color: dimgray;
+}
+
+.btn-nav-right {
+  margin-right: 15px;
+  font-family: Arial, sans-serif;
+  font-weight: 700;
+}
+
+li.nav-item {
+  margin: 10px 10px;
+}
+#cards{
+  
+    display: flex;
+    flex-wrap: wrap;
+    
+}
