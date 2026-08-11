@@ -66,8 +66,20 @@ function reservation(){
             total_price: document.getElementById("totalPrice").value,
             check_in: document.getElementById("checkIn").value,
             check_out: document.getElementById("checkOut").value,
-            status:
+            status: document.getElementById("status").value,
 
         }
+        fetch("http://localhost:8080/reservation", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(reservation)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        }).catch(err => console.log(err));
     })
 }
+reservation();

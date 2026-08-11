@@ -21,7 +21,7 @@
     align-items: center;
 
 }
-#div1{
+#hero{
     color: white;
     margin: 0;
     height: 100vh;
@@ -30,9 +30,12 @@
     animation: Slideshow 15s infinite;
 }
 @keyframes Slideshow {
-    0%   { background-image: url('https://media.istockphoto.com/id/119926339/photo/resort-swimming-pool.jpg?s=612x612&w=0&k=20&c=9QtwJC2boq3GFHaeDsKytF4-CavYKQuy1jBD2IRfYKc='); }
-    50%  { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB40ZwwvA_ZR4Y8IA8G3I07vfh9bpWTAfi2g&s'); }
-    100%  { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVCJbcikUJ4B6npvzMiVG3wt0ReFMETbAzeg&s'); }
+    0%   { background-image: url('./Photos/hero-image-bar.jpg'); }
+    50%  { background-image: url('Photos/sauna-image.jpg'); }
+    100%  { background-image: url('Photos/hotel-image.PNG'); }
+}
+.mainText{
+    margin-top: 30px;
 }
 #text{
     font-size: 60px;
@@ -47,8 +50,11 @@
 .body1{
     color: grey;
 }
-#hotelFoto{
-    width: 400px;
+
+.card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover
 }
 .box{
     display: flex;
@@ -58,6 +64,7 @@
     transition: all 0.3s ease;
     width: 350px;
     height: 140px;
+    padding: 20px;
 
 }
 .box:hover{
@@ -68,6 +75,7 @@
     display: flex;
     flex-direction: row;
     gap: 20px;
+    color: white;
 }
 .textOfBox{
     color: grey;
@@ -88,6 +96,7 @@
     display: flex;
     flex-direction: row;
     align-content: space-around;
+    margin-top: 50px;
 }
 #carouselExample{
     background-size: cover;
@@ -114,4 +123,21 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+div.main-content {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+}
+
+.btn-nav-right {
+    margin-right: 15px;
+    font-family: 'Arial';
+    font-weight: 700;
+}
+
+li.nav-item {
+    margin: 10px 10px;
 }
