@@ -4,6 +4,7 @@ import Layout from "./layout/Layout";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import RoomsAndPrices from "./pages/RoomsAndPrices";
+import './App.css';
 
 function App() {
   return (
