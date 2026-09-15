@@ -1,0 +1,283 @@
+:root {
+  /* Palette */
+  --color-black: #000000;
+  --color-dark: #14213d;
+  --color-accent: #fca311;
+  --color-light: #e5e5e5;
+  --color-white: #ffffff;
+
+  /* Semantic colors */
+  --background-dark: var(--color-dark);
+  --background-darker: var(--color-black);
+  --background-light: var(--color-light);
+  --background-white: var(--color-white);
+  --background-accent: var(--color-accent);
+
+  --text-dark: var(--color-dark);
+  --text-black: var(--color-black);
+  --text-light: var(--color-light);
+  --text-white: var(--color-white);
+  --text-accent: var(--color-accent);
+
+  --border-dark: var(--color-dark);
+  --border-black: var(--color-black);
+  --border-light: var(--color-light);
+  --border-white: var(--color-white);
+  --border-accent: var(--color-accent);
+}
+
+
+/* =========================
+   BACKGROUNDS
+   ========================= */
+
+.dark-background {
+  background-color: var(--background-dark);
+}
+
+.darker-background {
+  background-color: var(--background-darker);
+}
+
+.light-background {
+  background-color: var(--background-light);
+}
+
+.white-background {
+  background-color: var(--background-white);
+}
+
+.accent-background {
+  background-color: var(--background-accent);
+}
+
+
+/* =========================
+   TEXT
+   ========================= */
+
+.dark-text {
+  color: var(--text-dark);
+}
+
+.black-text {
+  color: var(--text-black);
+}
+
+.light-text {
+  color: var(--text-light);
+}
+
+.white-text {
+  color: var(--text-white);
+}
+
+.accent-text {
+  color: var(--text-accent);
+}
+
+
+/* =========================
+   BORDERS
+   ========================= */
+
+.dark-border {
+  border-color: var(--border-dark);
+}
+
+.black-border {
+  border-color: var(--border-black);
+}
+
+.light-border {
+  border-color: var(--border-light);
+}
+
+.white-border {
+  border-color: var(--border-white);
+}
+
+.accent-border {
+  border-color: var(--border-accent);
+}
+
+
+/* =========================
+   HOVER BACKGROUNDS
+   ========================= */
+
+.hover-dark-background:hover {
+  background-color: var(--background-dark);
+}
+
+.hover-darker-background:hover {
+  background-color: var(--background-darker);
+}
+
+.hover-light-background:hover {
+  background-color: var(--background-light);
+}
+
+.hover-white-background:hover {
+  background-color: var(--background-white);
+}
+
+.hover-accent-background:hover {
+  background-color: var(--background-accent);
+}
+
+
+/* =========================
+   HOVER TEXT
+   ========================= */
+
+.hover-dark-text:hover {
+  color: var(--text-dark);
+}
+
+.hover-black-text:hover {
+  color: var(--text-black);
+}
+
+.hover-light-text:hover {
+  color: var(--text-light);
+}
+
+.hover-white-text:hover {
+  color: var(--text-white);
+}
+
+.hover-accent-text:hover {
+  color: var(--text-accent);
+}
+
+
+/* =========================
+   HOVER BORDERS
+   ========================= */
+
+.hover-dark-border:hover {
+  border-color: var(--border-dark);
+}
+
+.hover-black-border:hover {
+  border-color: var(--border-black);
+}
+
+.hover-light-border:hover {
+  border-color: var(--border-light);
+}
+
+.hover-white-border:hover {
+  border-color: var(--border-white);
+}
+
+.hover-accent-border:hover {
+  border-color: var(--border-accent);
+}
+
+
+/* =========================
+   OUTLINES / FOCUS
+   ========================= */
+
+.dark-outline {
+  outline-color: var(--color-dark);
+}
+
+.accent-outline {
+  outline-color: var(--color-accent);
+}
+
+.light-outline {
+  outline-color: var(--color-light);
+}
+
+
+/* =========================
+   SVG / ICON COLORS
+   ========================= */
+
+.dark-fill {
+  fill: var(--color-dark);
+}
+
+.light-fill {
+  fill: var(--color-light);
+}
+
+.white-fill {
+  fill: var(--color-white);
+}
+
+.accent-fill {
+  fill: var(--color-accent);
+}
+
+.dark-stroke {
+  stroke: var(--color-dark);
+}
+
+.light-stroke {
+  stroke: var(--color-light);
+}
+
+.white-stroke {
+  stroke: var(--color-white);
+}
+
+.accent-stroke {
+  stroke: var(--color-accent);
+}
+
+
+/* =========================
+   PLACEHOLDERS
+   ========================= */
+
+.dark-placeholder::placeholder {
+  color: var(--text-dark);
+}
+
+.light-placeholder::placeholder {
+  color: var(--text-light);
+}
+
+.white-placeholder::placeholder {
+  color: var(--text-white);
+}
+
+.accent-placeholder::placeholder {
+  color: var(--text-accent);
+}
+
+
+/* =========================
+   SELECTION
+   ========================= */
+
+::selection {
+  background-color: var(--color-accent);
+  color: var(--color-black);
+}
+
+/* =========================
+   BOOTSTRAP NAV LINKS OVERRIDE
+   ========================= */
+
+.navbar .nav-link {
+  color: var(--text-light) !important;
+  background-color: transparent !important;
+}
+
+.navbar .nav-link:hover, .nav-link:focus {
+  color: var(--text-accent) !important;
+  background-color: transparent !important;
+}
+
+.navbar .nav-link:focus,
+.navbar .nav-link:active,
+.navbar .nav-link:focus-visible {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}

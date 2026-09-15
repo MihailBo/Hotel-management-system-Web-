@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
-@CrossOrigin(origins = "http://localhost:63342")
+@CrossOrigin(origins = "http://localhost:3000")
 public class Customer_Controller {
 
     private Customer_Rep repo;

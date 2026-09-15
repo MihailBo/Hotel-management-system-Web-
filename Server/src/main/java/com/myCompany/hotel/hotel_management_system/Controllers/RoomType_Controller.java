@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/roomType")
-@CrossOrigin(origins = "http://localhost:63344")
+@CrossOrigin(origins = "http://localhost:3000")
 public class RoomType_Controller {
 
     RoomType_Rep repo;

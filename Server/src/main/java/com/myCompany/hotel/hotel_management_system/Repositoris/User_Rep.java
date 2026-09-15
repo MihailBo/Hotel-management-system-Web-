@@ -1,9 +1,15 @@
-package com.myCompany.hotel.hotel_management_system.Repositoris;
+package com.myCompany.hotel.hotel_management_system.Repositories;
 
 import com.myCompany.hotel.hotel_management_system.Models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import java.util.Optional;
+
 public interface User_Rep extends JpaRepository<User, Long> {
+
+    Optional<User> findByUserName(String userName);
+
+    Optional<User> findByEmail(String email);
 }
+
+
