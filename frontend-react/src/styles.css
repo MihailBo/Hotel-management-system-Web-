@@ -280,3 +280,29 @@ font-weight: 700;
   border-color: var(--border-accent);
   box-shadow: 0 0 0 0.2rem rgba(252, 163, 17, 0.25);
 }
+
+.innerBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.boxIcon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  stroke-width: 1.8;
+}
+
+.boxTitle {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.textOfBox {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.65;
+}
