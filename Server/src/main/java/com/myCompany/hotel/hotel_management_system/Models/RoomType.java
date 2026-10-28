@@ -1,6 +1,6 @@
 package com.myCompany.hotel.hotel_management_system.Models;
 
-import com.myCompany.hotel.hotel_management_system.Enums.Name;
+import com.myCompany.hotel.hotel_management_system.Enums.RoomTypes;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Room_type {
+public class RoomType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Enumerated(EnumType.ORDINAL)
-    private Name name;
+    private RoomTypes type;
     private String description;
+    private String imageUrl;
 
 }

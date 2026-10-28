@@ -2,17 +2,17 @@ package com.myCompany.hotel.hotel_management_system.Services;
 
 import com.myCompany.hotel.hotel_management_system.DTO.RegisterRequest;
 import com.myCompany.hotel.hotel_management_system.Models.User;
-import com.myCompany.hotel.hotel_management_system.Repositories.User_Rep;
+import com.myCompany.hotel.hotel_management_system.Repositoris.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
 
-    private final User_Rep userRep;
+    private final UserRepository userRep;
     private final PasswordEncoder passwordEncoder;
 
-    public AuthService(User_Rep userRep,
+    public AuthService(UserRepository userRep,
                        PasswordEncoder passwordEncoder) {
         this.userRep = userRep;
         this.passwordEncoder = passwordEncoder;
@@ -20,6 +20,7 @@ public class AuthService {
 
     public User register(RegisterRequest request) {
 
+        // TODO: proper exceptions
         if (userRep.findByUserName(request.getUserName()).isPresent()) {
             throw new RuntimeException("Username already exists.");
         }

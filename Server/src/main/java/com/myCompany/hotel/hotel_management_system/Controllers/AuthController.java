@@ -5,6 +5,7 @@ import com.myCompany.hotel.hotel_management_system.DTO.RegisterRequest;
 import com.myCompany.hotel.hotel_management_system.Models.User;
 import com.myCompany.hotel.hotel_management_system.Services.AuthService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,17 +23,22 @@ import org.springframework.web.bind.annotation.*;
         origins = "http://localhost:3000",
         allowCredentials = "true"
 )
-public class Auth_Controller {
+public class AuthController {
 
     private final AuthService authService;
     private final AuthenticationManager authenticationManager;
 
-    public Auth_Controller(
+    public AuthController(
             AuthService authService,
             AuthenticationManager authenticationManager) {
 
         this.authService = authService;
         this.authenticationManager = authenticationManager;
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<?> status(){
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")
@@ -57,9 +65,12 @@ public class Auth_Controller {
                         )
                 );
 
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
+
         session.setAttribute(
-                "user",
-                authentication.getName()
+                "SPRING_SECURITY_CONTEXT",
+                SecurityContextHolder.getContext()
         );
 
         return ResponseEntity.ok(
@@ -69,13 +80,18 @@ public class Auth_Controller {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout(
-            HttpSession session) {
+            HttpServletRequest request) {
 
-        session.invalidate();
+        SecurityContextLogoutHandler logoutHandler =
+                new SecurityContextLogoutHandler();
 
-        return ResponseEntity.ok(
-                "Logout successful."
+        logoutHandler.logout(
+                request,
+                null,
+                SecurityContextHolder.getContext().getAuthentication()
         );
+
+        return ResponseEntity.ok("Logout successful.");
     }
 }
 

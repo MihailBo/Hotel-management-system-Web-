@@ -1,9 +1,31 @@
 import { Link, NavLink } from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
+import { logout } from "../API/registerApi";
+
+
 
 function Header() {
   const [roomsOpen, setRoomsOpen] = useState(false);
+
+  const [logged,setLogged] = useState(false)
+
+  // TODO: update on logout
+  useEffect(()=>{
+    fetch("http://localhost:8080/auth/status",{
+        credentials: "include",
+    }).then(r => {
+      if(r.ok){
+        console.log('logged')
+        setLogged(true);
+      }
+      else{
+        console.log('not logged');
+        setLogged(false);
+      }
+    });
+  },[]);
 
   return (
     <header className="dark-background">
@@ -13,6 +35,73 @@ function Header() {
             <img src="photos/my-logo.png" alt="Logo" />
           </Link>
 
+{/* ROOMS DROPDOWN */}
+              <li className="rooms-dropdown">
+               <button 
+                  type="button"
+                  className="rooms-dropdown-button light-text hover-accent-text"
+                  onClick={() => setRoomsOpen(!roomsOpen)}
+                  aria-expanded={roomsOpen}
+                  aria-label="Open rooms menu"
+                >
+                  <Menu size={32} strokeWidth={2} />
+                </button>
+
+                {roomsOpen && (
+                  <ul className="rooms-dropdown-menu">
+                    <li>
+                      <Link
+                        className="rooms-dropdown-item light-text hover-accent-text"
+                        to="/rooms"
+                      >
+                        Rooms and prices
+                      </Link>
+                    </li>
+
+                    <li>
+                      <Link
+                        className="rooms-dropdown-item light-text hover-accent-text"
+                        to="/"
+                        data-bs-toggle="modal"
+                        data-bs-target="#bookingModal"
+                      >
+                        Booking
+                      </Link>
+                    </li>
+
+                    <li>
+                      <div id="icons">
+                        <a href="https://facebook.com/"
+                          aria-label="Facebook"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="accent-text"
+                          >
+                          <i className="bi bi-facebook fs-3"></i>
+                        </a>
+
+                        <a href="https://instagram.com"
+                          aria-label="Instagram"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="accent-text"
+                          >
+                          <i className="bi bi-instagram fs-3"></i>
+                        </a>
+
+                        <a href="https://tiktok.com/"
+                          aria-label="TikTok"
+                          target="_blank"
+                          rel="noreferrer"
+                          className="accent-text">
+                          <i className="bi bi-tiktok fs-3"></i>
+                        </a>
+                       </div>
+                    </li>
+                  </ul>
+                )}
+              </li>
+            
           <button
             className="navbar-toggler light-border"
             type="button"
@@ -56,74 +145,39 @@ function Header() {
                 </NavLink>
               </li>
 
-              {/* ROOMS DROPDOWN */}
-              <li className="rooms-dropdown">
-                <button
-                  type="button"
-                  className="rooms-dropdown-button light-text hover-accent-text"
-                  onClick={() => setRoomsOpen(!roomsOpen)}
-                  aria-expanded={roomsOpen}
-                >
-                  menu
-                  <span className="dropdown-arrow">
-                    {roomsOpen ? "▲" : "▼"}
-                  </span>
-                </button>
-
-                {roomsOpen && (
-                  <ul className="rooms-dropdown-menu">
-                    <li>
-                      <Link
-                        className="rooms-dropdown-item light-text"
-                        to="/rooms"
-                        onClick={() => setRoomsOpen(false)}
-                      >
-                        Rooms and prices
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        className="rooms-dropdown-item light-text"
-                        to="/rooms/room-2"
-                        onClick={() => setRoomsOpen(false)}
-                      >
-                        Dummy Link 2
-                      </Link>
-                    </li>
-
-                    <li>
-                      <Link
-                        className="rooms-dropdown-item light-text"
-                        to="/rooms/room-3"
-                        onClick={() => setRoomsOpen(false)}
-                      >
-                        Dummy Link 3
-                      </Link>
-                    </li>
-                  </ul>
-                )}
-              </li>
-            </ul>
-
+            </ul>  
             {/* SIGN UP */}
             <button
+              id="register-btn"
               className="btn btn-nav-right light-text light-border hover-accent-background hover-dark-text"
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#signupModal"
+              style={{ display: logged ? "none" : "block" }}
             >
               Sign Up
             </button>
 
             {/* LOG IN */}
             <button
+              id="login-btn"
               className="btn btn-nav-right accent-background dark-text accent-border hover-light-background"
               type="button"
               data-bs-toggle="modal"
               data-bs-target="#loginModal"
+              style={{ display: logged ? "none" : "block" }}
             >
               Log in
+            </button>
+
+            <button
+              id="logout-btn"
+              className="btn btn-nav-right accent-background dark-text accent-border hover-light-background"
+              type="button"
+              onClick={()=>logout()}
+              style={{ display: logged ? "block" : "none" }}
+            >
+              Logout
             </button>
           </div>
         </div>

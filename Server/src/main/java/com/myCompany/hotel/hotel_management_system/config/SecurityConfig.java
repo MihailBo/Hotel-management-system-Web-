@@ -2,11 +2,12 @@
 package com.myCompany.hotel.hotel_management_system.config;
 
 import com.myCompany.hotel.hotel_management_system.Models.User;
-import com.myCompany.hotel.hotel_management_system.Repositories.User_Rep;
 
+import com.myCompany.hotel.hotel_management_system.Repositoris.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 
@@ -19,15 +20,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
     @Configuration
     public class SecurityConfig {
 
-        private final User_Rep userRep;
+        private final UserRepository userRep;
 
-        public SecurityConfig(User_Rep userRep) {
+        public SecurityConfig(UserRepository userRep) {
             this.userRep = userRep;
         }
 
@@ -92,30 +96,53 @@ import java.util.List;
 
             http
                     .csrf(csrf -> csrf.disable())
-
                     .cors(cors -> {})
-
                     .authorizeHttpRequests(auth -> auth
 
-                            // Anyone can register
-                            .requestMatchers("/auth/register")
-                            .permitAll()
+                            .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                            // Anyone can login
-                            .requestMatchers("/auth/login")
-                            .permitAll()
+                            .requestMatchers(
+                                    "/auth/register",
+                                    "/auth/login"
+                            ).permitAll()
 
-                            // Everything else requires login
-                            .anyRequest()
-                            .authenticated()
+                            .requestMatchers(
+                                    HttpMethod.GET, "/roomType"
+                            ).permitAll()
+
+                            .requestMatchers(
+                                    HttpMethod.GET, "/room/**"
+                            ).permitAll()
+
+                            .anyRequest().authenticated()
                     )
-
-                    // We are creating our own /auth/login
                     .formLogin(form -> form.disable())
-
-                    // We are not using HTTP Basic authentication
                     .httpBasic(basic -> basic.disable());
 
             return http.build();
+        }
+
+
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+            CorsConfiguration config = new CorsConfiguration();
+
+            config.setAllowedOrigins(
+                    List.of("http://localhost:3000")
+            );
+
+            config.setAllowedMethods(
+                    List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+            );
+
+            config.setAllowedHeaders(List.of("*"));
+            config.setAllowCredentials(true);
+
+            UrlBasedCorsConfigurationSource source =
+                    new UrlBasedCorsConfigurationSource();
+
+            source.registerCorsConfiguration("/**", config);
+
+            return source;
         }
     }

@@ -276,9 +276,9 @@ export default function Home() {
           {/* LOCATION */}
 <div id="location" className="dark-background white-text dark-border">
   <div>
-    <h2 id="title3" className="accent-text">
+    <h1 id="title3" className="accent-text">
       -Find us
-    </h2>
+    </h1>
   </div>
 
   <div className="map-container accent-border">

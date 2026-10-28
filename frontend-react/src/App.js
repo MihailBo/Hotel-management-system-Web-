@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import RoomsAndPrices from "./pages/RoomsAndPrices";
 import './App.css';
+import BookingModal from "./components/BookingModal";
 
 function App() {
   return (

@@ -1,6 +1,6 @@
 package com.myCompany.hotel.hotel_management_system.Enums;
 
-public enum Name {
+public enum RoomTypes {
     SINGLE,
     DOUBLE,
     DELUXE

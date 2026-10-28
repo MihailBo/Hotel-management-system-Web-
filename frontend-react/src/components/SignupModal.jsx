@@ -1,16 +1,24 @@
+
 import { useState } from "react";
-import { createCustomer } from "../API/customerApi";
+import { createCustomer } from "../API/registerApi";
+import { Modal } from "bootstrap";
 
 function SignupModal() {
   const [customer, setCustomer] = useState({
-    first_name: "",
-    last_name: "",
+    userName: "",
     email: "",
-    phoneNum: "",
-    idCard_id: "",
     password: ""
   });
 
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  //   const modalElement = document.getElementById("signupModal");
+
+  // if (modalElement) {
+  //   const modal = Modal.getOrCreateInstance(modalElement);
+  //   modal.hide();
+  // }
   function changeField(event) {
     const { name, value } = event.target;
 
@@ -23,11 +31,34 @@ function SignupModal() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    setError("");
+    setSuccess("");
+
     try {
-      const data = await createCustomer(customer);
-      console.log(data);
+      await createCustomer(customer);
+
+      setSuccess("Registration successful!");
+
+      setCustomer({
+        userName: "",
+        email: "",
+        password: ""
+      });
+
+      // Изчакваме малко, за да се види success съобщението
+      setTimeout(() => {
+        const modalElement = document.getElementById("signupModal");
+
+        if (modalElement) {
+          const modal = Modal.getOrCreateInstance(modalElement);
+          modal.hide();
+        }
+
+        setSuccess("");
+      }, 1000);
     } catch (error) {
       console.error(error);
+      setError(error.message || "Registration failed.");
     }
   }
 
@@ -41,6 +72,7 @@ function SignupModal() {
     >
       <div className="modal-dialog">
         <div className="modal-content">
+
           <div className="modal-header">
             <h2 className="modal-title fs-5" id="signupModalLabel">
               Sign Up
@@ -55,28 +87,38 @@ function SignupModal() {
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="modal-body" id="singUpInfo">
-              <label htmlFor="nameInput">First name</label>
+
+            <div className="modal-body">
+
+              {error && (
+                <div className="alert alert-danger">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="alert alert-success">
+                  {success}
+                </div>
+              )}
+
+              <label htmlFor="usernameInput">
+                Username
+              </label>
 
               <input
-                id="nameInput"
+                id="usernameInput"
                 className="form-control mb-2"
-                name="first_name"
-                value={customer.first_name}
+                name="userName"
+                type="text"
+                value={customer.userName}
                 onChange={changeField}
+                required
               />
 
-              <label htmlFor="lastNameInput">Last name</label>
-
-              <input
-                id="lastNameInput"
-                className="form-control mb-2"
-                name="last_name"
-                value={customer.last_name}
-                onChange={changeField}
-              />
-
-              <label htmlFor="emailInput">Email</label>
+              <label htmlFor="emailInput">
+                Email
+              </label>
 
               <input
                 id="emailInput"
@@ -85,29 +127,12 @@ function SignupModal() {
                 type="email"
                 value={customer.email}
                 onChange={changeField}
+                required
               />
 
-              <label htmlFor="phoneInput">Phone number</label>
-
-              <input
-                id="phoneInput"
-                className="form-control mb-2"
-                name="phoneNum"
-                value={customer.phoneNum}
-                onChange={changeField}
-              />
-
-              <label htmlFor="cardIdInput">ID card</label>
-
-              <input
-                id="cardIdInput"
-                className="form-control mb-2"
-                name="idCard_id"
-                value={customer.idCard_id}
-                onChange={changeField}
-              />
-
-              <label htmlFor="passwordInput">Password</label>
+              <label htmlFor="passwordInput">
+                Password
+              </label>
 
               <input
                 id="passwordInput"
@@ -116,10 +141,13 @@ function SignupModal() {
                 type="password"
                 value={customer.password}
                 onChange={changeField}
+                required
               />
+
             </div>
 
             <div className="modal-footer">
+
               <button
                 className="btn btn-secondary"
                 type="button"
@@ -128,10 +156,15 @@ function SignupModal() {
                 Close
               </button>
 
-              <button id="send" className="btn btn-primary" type="submit">
-                Send
+              <button
+                className="btn btn-primary"
+                type="submit"
+              >
+                Sign Up
               </button>
+
             </div>
+
           </form>
         </div>
       </div>
@@ -140,3 +173,4 @@ function SignupModal() {
 }
 
 export default SignupModal;
+

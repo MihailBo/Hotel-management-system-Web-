@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface Reservation_Rep extends JpaRepository<Reservation, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
     @Query( "SELECT r " +
             "FROM Reservation r " +
             "WHERE r.check_in < :checkOut AND r.check_out > :checkIn")

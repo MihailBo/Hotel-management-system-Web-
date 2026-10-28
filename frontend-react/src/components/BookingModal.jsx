@@ -1,187 +1,331 @@
+
 import { useState } from "react";
 import { createReservation } from "../API/reservationApi";
+function bookingModal({ selectedRoomType, isOpen, onClose }){
 
-function BookingModal() {
-  const [roomType, setRoomType] = useState("Select room type");
+    if (!isOpen) return null;
 
-  const [reservation, setReservation] = useState({
-    customer_id: "",
-    room_id: "",
-    total_price: "",
-    check_in: "",
-    check_out: "",
-    status: ""
-  });
+    return(
+        <>
+          <div
+            className="modal fade show d-block"
+            tabIndex="-1"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered"
+              role="document"
+            >
+              <div className="modal-content">
 
-  function changeField(event) {
-    const { name, value } = event.target;
+                {/* MODAL HEADER */}
 
-    setReservation((currentReservation) => ({
-      ...currentReservation,
-      [name]: value
-    }));
-  }
+                <div className="modal-header dark-background">
+                  <h5 className="modal-title white-text">
+                    Check availability for a {selectedRoomType.name} room
+                  </h5>
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+                  <button
+                    type="button"
+                    className="btn-close btn-close-white"
+                    onClick={onClose}
+                  />
+                </div>
 
-    try {
-      const data = await createReservation(reservation);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+                {/* MODAL BODY */}
 
-  return (
-    <div
-      className="modal fade"
-      id="bookingModal"
-      tabIndex="-1"
-      aria-labelledby="bookingModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h2 className="modal-title fs-5" id="bookingModalLabel">
-              Booking
-            </h2>
+                <div className="modal-body">
+                  <p className="dark-text">
+                    Select your check-in and check-out dates.
+                  </p>
 
-            <button
-              className="btn-close"
-              type="button"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            />
+                  {/* CHECK IN */}
+
+                  <div className="mb-3">
+                    <label
+                      htmlFor="checkIn"
+                      className="form-label dark-text fw-bold"
+                    >
+                      Check-in
+                    </label>
+
+                    <input
+                      id="checkIn"
+                      type="date"
+                      className="form-control"
+                      value={checkIn}
+                      min={
+                        new Date()
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                      onChange={(e) => {
+                        setCheckIn(e.target.value);
+                        setAvailability(null);
+                        setAvailabilityError(null);
+                      }}
+                    />
+                  </div>
+
+                  {/* CHECK OUT */}
+
+                  <div className="mb-3">
+                    <label
+                      htmlFor="checkOut"
+                      className="form-label dark-text fw-bold"
+                    >
+                      Check-out
+                    </label>
+
+                    <input
+                      id="checkOut"
+                      type="date"
+                      className="form-control"
+                      value={checkOut}
+                      min={
+                        checkIn ||
+                        new Date()
+                          .toISOString()
+                          .split("T")[0]
+                      }
+                      onChange={(e) => {
+                        setCheckOut(e.target.value);
+                        setAvailability(null);
+                        setAvailabilityError(null);
+                      }}
+                    />
+                  </div>
+
+                  {/* ERROR */}
+
+                  {availabilityError && (
+                    <div className="alert alert-danger">
+                      {availabilityError}
+                    </div>
+                  )}
+
+                  {/* AVAILABILITY */}
+
+                  {availability && availability.availableRooms <= 0 && (
+                    <div className="alert alert-danger">
+                      <strong>
+                        No rooms available for this period.
+                      </strong>
+                    </div>
+                  )}
+                </div>
+
+                {/* MODAL FOOTER */}
+
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeBookingModal}
+                  >
+                    Close
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn accent-background dark-text fw-bold"
+                    onClick={handleCheckAvailability}
+                    disabled={checkingAvailability}
+                  >
+                    {checkingAvailability
+                      ? "Checking..."
+                      : "Check availability"}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="modal-body" id="bookingInfo">
-              <div className="dropdown mb-3">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {roomType}
-                </button>
+          {/* MODAL BACKDROP */}
 
-                <ul className="dropdown-menu">
-                  <li>
-                    <button
-                      className="dropdown-item"
-                      type="button"
-                      onClick={() => setRoomType("Single")}
-                    >
-                      Single
-                    </button>
-                  </li>
-
-                  <li>
-                    <button
-                      className="dropdown-item"
-                      type="button"
-                      onClick={() => setRoomType("Double")}
-                    >
-                      Double
-                    </button>
-                  </li>
-
-                  <li>
-                    <button
-                      className="dropdown-item"
-                      type="button"
-                      onClick={() => setRoomType("Deluxe")}
-                    >
-                      Deluxe
-                    </button>
-                  </li>
-                </ul>
-              </div>
-
-              <label htmlFor="customerId">Customer ID</label>
-
-              <input
-                id="customerId"
-                className="form-control mb-2"
-                name="customer_id"
-                value={reservation.customer_id}
-                onChange={changeField}
-              />
-
-              <label htmlFor="roomId">Room ID</label>
-
-              <input
-                id="roomId"
-                className="form-control mb-2"
-                name="room_id"
-                value={reservation.room_id}
-                onChange={changeField}
-              />
-
-              <label htmlFor="totalPrice">Total price</label>
-
-              <input
-                id="totalPrice"
-                className="form-control mb-2"
-                name="total_price"
-                value={reservation.total_price}
-                onChange={changeField}
-              />
-
-              <label htmlFor="checkIn">Check in</label>
-
-              <input
-                id="checkIn"
-                className="form-control mb-2"
-                name="check_in"
-                type="date"
-                value={reservation.check_in}
-                onChange={changeField}
-              />
-
-              <label htmlFor="checkOut">Check out</label>
-
-              <input
-                id="checkOut"
-                className="form-control mb-2"
-                name="check_out"
-                type="date"
-                value={reservation.check_out}
-                onChange={changeField}
-              />
-
-              <label htmlFor="status">Status</label>
-
-              <input
-                id="status"
-                className="form-control"
-                name="status"
-                value={reservation.status}
-                onChange={changeField}
-              />
-            </div>
-
-            <div className="modal-footer">
-              <button
-                className="btn btn-secondary"
-                type="button"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-
-              <button id="book" className="btn btn-primary" type="submit">
-                Book
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
+          <div
+            className="modal-backdrop fade show"
+            onClick={closeBookingModal}
+          />
+        </>
+      )
 }
 
-export default BookingModal;
+
+function bookingDetailsModal(){
+  {/* ======================================
+          BOOKING DETAILS MODAL
+      ====================================== */}
+
+      return(
+        <>
+          <div
+            className="modal fade show d-block"
+            tabIndex="-1"
+            role="dialog"
+          >
+            <div
+              className="modal-dialog modal-dialog-centered"
+              role="document"
+            >
+              <div className="modal-content">
+
+                {/* MODAL HEADER */}
+
+                <div className="modal-header dark-background">
+                  <h5 className="modal-title white-text">
+                    Complete your booking
+                  </h5>
+
+                  <button
+                    type="button"
+                    className="btn-close btn-close-white"
+                    onClick={closeBookingDetailsModal}
+                  />
+                </div>
+
+                {/* MODAL BODY */}
+                
+
+                <div className="modal-body">
+
+                  {/* ERROR */}
+
+                  {availabilityError && (
+                    <div className="alert alert-danger">
+                      {availabilityError}
+                    </div>
+                  )}    
+
+                  <div className="mb-4">
+                    <h6 className="dark-text fw-bold">
+                      {selectedRoomType.name}
+                    </h6>
+
+                    <p className="dark-text mb-1">
+                      <strong>Check-in:</strong>{" "}
+                      {checkIn}
+                    </p>
+
+                    <p className="dark-text mb-1">
+                      <strong>Check-out:</strong>{" "}
+                      {checkOut}
+                    </p>
+
+                    <p className="dark-text mb-0">
+                      <strong>Rooms available:</strong>{" "}
+                      {availability?.availableRooms}
+                    </p>
+                  </div>
+
+                  <form id="bookingForm">
+                    {/* GUEST NAME */}
+
+                    <div className="mb-3">
+                      <label
+                        htmlFor="guestName"
+                        className="form-label dark-text fw-bold"
+                      >
+                        Full name
+                      </label>
+
+                      <input
+                        id="guestName"
+                        type="text"
+                        className="form-control"
+                        value={guestName}
+                        onChange={(e) =>
+                          setGuestName(e.target.value)
+                        }
+                        placeholder="Enter your full name"
+                        required
+                      />
+                    </div>
+
+                    {/* GUEST EMAIL */}
+
+                    <div className="mb-3">
+                      <label
+                        htmlFor="guestEmail"
+                        className="form-label dark-text fw-bold"
+                      >
+                        Email
+                      </label>
+
+                      <input
+                        id="guestEmail"
+                        type="email"
+                        className="form-control"
+                        value={guestEmail}
+                        onChange={(e) =>
+                          setGuestEmail(e.target.value)
+                        }
+                        placeholder="Enter your email"
+                        required
+                      />
+                    </div>
+
+                    {/* GUEST PHONE */}
+
+                    <div className="mb-3">
+                      <label
+                        htmlFor="guestPhone"
+                        className="form-label dark-text fw-bold"
+                      >
+                        Phone
+                      </label>
+
+                      <input
+                        id="guestPhone"
+                        type="tel"
+                        className="form-control"
+                        value={guestPhone}
+                        onChange={(e) =>
+                          setGuestPhone(e.target.value)
+                        }
+                        placeholder="Enter your phone number"
+                        required
+                      />
+                    </div>
+                  </form>
+
+                  
+                </div>
+
+                {/* MODAL FOOTER */}
+
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={closeBookingDetailsModal}
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    
+             
+                    className="btn accent-background dark-text fw-bold"
+                    onClick={handleConfirmBooking}
+                  >
+                    Confirm booking
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* MODAL BACKDROP */}
+
+          <div
+            className="modal-backdrop fade show"
+            onClick={closeBookingDetailsModal}
+          />
+        </>
+      )
+}
+
+export default bookingModal;
+
+

@@ -17,7 +17,7 @@ public class Room {
     private double pricePerNight;
     @ManyToOne
     @JoinColumn(name = "room_type_id") // foreign key
-    private Room_type roomType;
+    private RoomType roomType;
 
 
 }

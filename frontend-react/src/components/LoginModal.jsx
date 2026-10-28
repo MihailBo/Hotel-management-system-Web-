@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { loginCustomer } from "../API/customerApi";
+import { Modal } from "bootstrap";
+
+import { loginCustomer } from "../API/registerApi";
 
 function LoginModal() {
   const [credentials, setCredentials] = useState({
-    email: "",
+    userName: "",
     password: ""
   });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   function changeField(event) {
     const { name, value } = event.target;
@@ -19,11 +24,33 @@ function LoginModal() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    setError("");
+    setSuccess("");
+
     try {
-      const data = await loginCustomer(credentials);
-      console.log(data);
+      await loginCustomer(credentials);
+
+      setSuccess("Login successful!");
+
+      setCredentials({
+        userName: "",
+        password: ""
+      });
+
+      setTimeout(() => {
+        const modalElement = document.getElementById("loginModal");
+
+        if (modalElement) {
+          const modal = Modal.getOrCreateInstance(modalElement);
+          modal.hide();
+        }
+
+        setSuccess("");
+      }, 1000);
+
     } catch (error) {
       console.error(error);
+      setError(error.message || "Login failed.");
     }
   }
 
@@ -32,8 +59,6 @@ function LoginModal() {
       className="modal fade"
       id="loginModal"
       tabIndex="-1"
-      aria-labelledby="loginModalLabel"
-      aria-hidden="true"
     >
       <div className="modal-dialog">
         <div className="modal-content">
@@ -47,24 +72,36 @@ function LoginModal() {
               className="btn-close"
               type="button"
               data-bs-dismiss="modal"
-              aria-label="Close"
             />
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="modal-body" id="loginInfo">
+            <div className="modal-body">
 
-              <label htmlFor="loginEmailInput">
-                Email
+              {error && (
+                <div className="alert alert-danger">
+                  {error}
+                </div>
+              )}
+
+              {success && (
+                <div className="alert alert-success">
+                  {success}
+                </div>
+              )}
+
+              <label htmlFor="loginUsernameInput">
+                Username
               </label>
 
               <input
-                id="loginEmailInput"
+                id="loginUsernameInput"
                 className="form-control mb-2"
-                name="email"
-                type="email"
-                value={credentials.email}
+                name="userName"
+                type="text"
+                value={credentials.userName}
                 onChange={changeField}
+                required
               />
 
               <label htmlFor="loginPasswordInput">
@@ -78,6 +115,7 @@ function LoginModal() {
                 type="password"
                 value={credentials.password}
                 onChange={changeField}
+                required
               />
 
             </div>
