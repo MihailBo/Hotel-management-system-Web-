@@ -304,3 +304,8 @@
   background-color: var(--color-accent);
   color: var(--color-black);
 }
+
+
+.force-hidden {
+  display: none !important;
+}

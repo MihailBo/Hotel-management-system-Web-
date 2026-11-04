@@ -93,7 +93,7 @@ public class ReservationService {
         reservation.setRoom(room);
         reservation.setTotalPrice(totalPrice);
 
-        // FIXME: not all columns are saved in db
+
 
         return reservationRepository.save(reservation);
     }

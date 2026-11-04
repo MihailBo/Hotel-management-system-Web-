@@ -3,13 +3,23 @@ import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Menu } from "lucide-react";
 import { logout } from "../API/registerApi";
+import BookingModal from "./BookingModal";
 
 
 
 function Header() {
   const [roomsOpen, setRoomsOpen] = useState(false);
 
-  const [logged,setLogged] = useState(false)
+  const [logged,setLogged] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  function showBookingModal(){
+    setShowModal(true);
+  }
+
+  function closeBookingModal(){
+    setShowModal(false);
+  }
 
   // TODO: update on logout
   useEffect(()=>{
@@ -62,8 +72,8 @@ function Header() {
                       <Link
                         className="rooms-dropdown-item light-text hover-accent-text"
                         to="/"
-                        data-bs-toggle="modal"
-                        data-bs-target="#bookingModal"
+                
+                        onClick={()=>showBookingModal()}
                       >
                         Booking
                       </Link>
@@ -182,6 +192,11 @@ function Header() {
           </div>
         </div>
       </nav>
+
+      <BookingModal 
+        isOpen={showModal}
+        onClose={closeBookingModal}
+      />
     </header>
   );
 }

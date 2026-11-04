@@ -14,6 +14,8 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int roomNum;
+
+    // TODO: Move to RoomType
     private double pricePerNight;
     @ManyToOne
     @JoinColumn(name = "room_type_id") // foreign key

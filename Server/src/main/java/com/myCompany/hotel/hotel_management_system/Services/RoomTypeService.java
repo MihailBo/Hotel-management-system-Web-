@@ -30,7 +30,7 @@ public class RoomTypeService {
     public RoomType updateRoomType(Long id, RoomType newRoomType){
         RoomType roomType = roomTypeRepository.findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
         roomType.setDescription(newRoomType.getDescription());
-        roomType.setType(newRoomType.getType());
+        roomType.setName(newRoomType.getName());
         roomType.setImageUrl(newRoomType.getImageUrl());
         return roomTypeRepository.save(roomType);
     }
