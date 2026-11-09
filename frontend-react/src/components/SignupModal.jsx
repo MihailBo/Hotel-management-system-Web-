@@ -2,14 +2,27 @@
 import { useState } from "react";
 import { createCustomer } from "../API/registerApi";
 import { Modal } from "bootstrap";
+import LoginModal from "./LoginModal";
 
-function SignupModal() {
-  const [customer, setCustomer] = useState({
+function SignupModal({isOpen, onClose}) {
+
+
+
+   const [showModal, setShowModal] = useState(false);
+   const [customer, setCustomer] = useState({
     userName: "",
     email: "",
     password: ""
   });
 
+  function showLoginModal(){
+    setShowModal(true);
+  }
+
+  function closeSingupModal(){
+    setShowModal(false);
+  
+  }
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -27,6 +40,10 @@ function SignupModal() {
       [name]: value
     }));
   }
+  // function openLoginModal(){
+  //   showLoginModal();
+  //   closeSingupModal();
+  // }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -70,16 +87,15 @@ function SignupModal() {
       aria-labelledby="signupModalLabel"
       aria-hidden="true"
     >
-      <div className="modal-dialog">
+      <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
-
-          <div className="modal-header">
-            <h2 className="modal-title fs-5" id="signupModalLabel">
+          <div className="modal-header dark-background">
+            <h2 className="modal-title fs-5 white-text" id="signupModalLabel">
               Sign Up
             </h2>
 
             <button
-              className="btn-close"
+              className="btn-close btn-close-white"
               type="button"
               data-bs-dismiss="modal"
               aria-label="Close"
@@ -87,25 +103,16 @@ function SignupModal() {
           </div>
 
           <form onSubmit={handleSubmit}>
-
             <div className="modal-body">
-
-              {error && (
-                <div className="alert alert-danger">
-                  {error}
-                </div>
-              )}
+              {error && <div className="alert alert-danger">{error}</div>}
 
               {success && (
-                <div className="alert alert-success">
-                  {success}
-                </div>
+                <div className="alert alert-success">{success}</div>
               )}
 
-              <label htmlFor="usernameInput">
+              <label className="form-label dark-text" htmlFor="usernameInput">
                 Username
               </label>
-
               <input
                 id="usernameInput"
                 className="form-control mb-2"
@@ -113,27 +120,27 @@ function SignupModal() {
                 type="text"
                 value={customer.userName}
                 onChange={changeField}
+                
                 required
               />
 
-              <label htmlFor="emailInput">
+              <label className="form-label dark-text" htmlFor="emailInput">
                 Email
               </label>
-
               <input
                 id="emailInput"
                 className="form-control mb-2"
                 name="email"
                 type="email"
+                placeholder="Enter your email"
                 value={customer.email}
                 onChange={changeField}
                 required
               />
 
-              <label htmlFor="passwordInput">
+              <label className="form-label dark-text" htmlFor="passwordInput">
                 Password
               </label>
-
               <input
                 id="passwordInput"
                 className="form-control"
@@ -141,13 +148,33 @@ function SignupModal() {
                 type="password"
                 value={customer.password}
                 onChange={changeField}
+                 placeholder="Enter your password"
+                onMouseEnter={(e) => {
+                    e.currentTarget.type = "text";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.type = "password";
+                  }}
                 required
               />
 
+               <p className="form-label dark-text">
+                Already have an account?
+               <span
+                className="form-label dark-text accent-text"
+                role="button"
+                data-bs-dismiss="modal"
+                data-bs-toggle="modal"
+                data-bs-target="#loginModal"
+                
+            
+                >
+                  Log In
+               </span>
+               </p>
             </div>
 
             <div className="modal-footer">
-
               <button
                 className="btn btn-secondary"
                 type="button"
@@ -157,17 +184,16 @@ function SignupModal() {
               </button>
 
               <button
-                className="btn btn-primary"
+                className="btn accent-background dark-text fw-bold"
                 type="submit"
               >
                 Sign Up
               </button>
-
             </div>
-
           </form>
         </div>
       </div>
+
     </div>
   );
 }

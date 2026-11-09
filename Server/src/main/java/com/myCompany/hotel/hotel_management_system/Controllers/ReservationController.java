@@ -53,7 +53,6 @@ public class ReservationController {
     }
 
     @PutMapping("/{id}")
-    // TODO: dto
     public ResponseEntity<?> Put(@PathVariable("id") Long id, Reservation newReservation, UserDetails userDetails){
           return ResponseEntity.ok(reservationService.Put(id, newReservation, userDetails)) ;
     }

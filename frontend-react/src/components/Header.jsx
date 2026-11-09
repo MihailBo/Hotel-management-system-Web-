@@ -187,7 +187,7 @@ function Header() {
               onClick={()=>logout()}
               style={{ display: logged ? "block" : "none" }}
             >
-              Logout
+              Log out
             </button>
           </div>
         </div>

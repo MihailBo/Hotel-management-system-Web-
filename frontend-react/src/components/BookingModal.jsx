@@ -21,6 +21,7 @@ export default function BookingModal({ selectedRoomType=null , isOpen, onClose }
     const [showBookingDetailsModal, setShowBookingDetailsModal] = useState(false);
 
     const [roomTypes, setRoomTypes] = useState([]);
+    const [chosenRoomType, setChosenRoomType] = useState();
 
     useEffect(()=>{
       if (selectedRoomType) return;
@@ -32,13 +33,19 @@ export default function BookingModal({ selectedRoomType=null , isOpen, onClose }
       }
 
       loadRoomTypes();
-      console.log(roomTypes)
 
     },[]);
 
-    function setSelectedRoomType(roomType){
-      selectedRoomType = roomType;
-    }
+    useEffect(()=>{
+        selectedRoomType = chosenRoomType;
+        
+    },[chosenRoomType]);
+
+    // TODO: del me
+    // TODO: selectedRoomType is not updated globally
+    useEffect(()=>{
+      console.log(selectedRoomType);
+    },[selectedRoomType])
 
     const closeBookingDetailsModal = () => {
       setShowBookingDetailsModal(false);
@@ -46,6 +53,9 @@ export default function BookingModal({ selectedRoomType=null , isOpen, onClose }
     };
 
     const handleCheckAvailability = async () => {
+
+      
+
       if (!checkIn || !checkOut) {
         setAvailabilityError(
           "Please select both check-in and check-out dates."
@@ -130,7 +140,7 @@ export default function BookingModal({ selectedRoomType=null , isOpen, onClose }
                   { !selectedRoomType && (
                     <div>
                       {/* FIXME: cant update selectedRoomType */}
-                      <select value={selectedRoomType ?? ""} onChange={(event) => setSelectedRoomType(event.target.value)}>
+                      <select value={chosenRoomType.id  ?? ""} onChange={(event) => setChosenRoomType({name:event.currentTarget.selectedOptions[0]?.textContent,id:event.target.value})}>
                         <option value="">Select a room type</option>
                         {roomTypes.map((option) => (
                           <option key={option.id} value={option.id} on>
