@@ -35,22 +35,6 @@ function RoomsAndPrices() {
     loadRoomTypes();
   }, []);
 
-  const getRoomImage = (roomType) => {
-    switch (roomType) {
-      case "SINGLE":
-        return "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&q=80";
-
-      case "DOUBLE":
-        return "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&q=80";
-
-      case "DELUXE":
-        return "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80";
-
-      default:
-        return "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80";
-    }
-  };
-
   if (loading) {
     return (
       <div className="container text-center py-5">
@@ -91,7 +75,7 @@ function RoomsAndPrices() {
             >
               <div className="card h-100 shadow-sm dark-border">
                 <img
-                  src={getRoomImage(roomType.name)}
+                  src={roomType.imageUrl}
                   className="card-img-top"
                   alt={`${roomType.name} room`}
                   style={{
