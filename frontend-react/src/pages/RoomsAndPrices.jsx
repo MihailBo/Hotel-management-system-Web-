@@ -4,8 +4,8 @@ import {
   getRoomTypes,
   checkRoomAvailability
 } from "../API/roomTypeApi";
-
 import BookingModal from "../components/BookingModal"
+import { useModal } from "../context/ModalContext";
 
 function RoomsAndPrices() {
   const [roomTypes, setRoomTypes] = useState([]);
@@ -13,23 +13,13 @@ function RoomsAndPrices() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Availability modal
-  const [showModal, setShowModal] = useState(false);
-  const [selectedRoomType, setSelectedRoomType] = useState(null);
-
-  // Booking details modal
-
-
-
-  // Guest details
-  // const [guestName, setGuestName] = useState("");
-  // const [guestEmail, setGuestEmail] = useState("");
-  // const [guestPhone, setGuestPhone] = useState("");
-
-  // ==========================================
-  // LOAD ROOM TYPES
-  // ==========================================
-
+  const {
+    openBookingOrLogin,
+    openLoginModal,
+    logged,
+    setLogged,
+  } = useModal();
+ 
   useEffect(() => {
     async function loadRoomTypes() {
       try {
@@ -44,10 +34,6 @@ function RoomsAndPrices() {
 
     loadRoomTypes();
   }, []);
-
-  // ==========================================
-  // ROOM IMAGES
-  // ==========================================
 
   const getRoomImage = (roomType) => {
     switch (roomType) {
@@ -65,80 +51,6 @@ function RoomsAndPrices() {
     }
   };
 
-  // ==========================================
-  // OPEN AVAILABILITY MODAL
-  // ==========================================
-
-  const openBookingModal = (roomType) => {
-    setSelectedRoomType(roomType);
-
-    setShowModal(true);
-    console.log("opening modal")
-    // setShowBookingModal(false);
-  };
-
-  // ==========================================
-  // CLOSE AVAILABILITY MODAL
-  // ==========================================
-
-  const closeBookingModal = () => {
-    setShowModal(false);
-  };
-
-  // ==========================================
-  // OPEN BOOKING DETAILS MODAL
-  // ==========================================
-
-  const openBookingDetailsModal = () => {
-    setShowModal(false);
-    setShowBookingModal(true);
-  };
-
-  // ==========================================
-  // CLOSE BOOKING DETAILS MODAL
-  // ==========================================
-
-
-
-  // ==========================================
-  // CHECK AVAILABILITY
-  // ==========================================
-
-  
-  // ==========================================
-  // CONFIRM BOOKING
-  // ==========================================
-
-  // const handleConfirmBooking = (e) => {
-  //   e.preventDefault();
-
-  //   if (!guestName || !guestEmail || !guestPhone) {
-  //     return;
-  //   }
-
-  //   // Add your booking API call here.
-  //   console.log("Booking details:", {
-  //     roomTypeId: selectedRoomType?.id,
-  //     roomType: selectedRoomType?.name,
-  //     checkIn,
-  //     checkOut,
-  //     availableRooms: availability?.availableRooms,
-  //     guestName,
-  //     guestEmail,
-  //     guestPhone
-  //   });
-
-  //   alert("Booking details submitted successfully.");
-
-  //   closeBookingDetailsModal();
-  // };
-
-  
-
-  // ==========================================
-  // LOADING
-  // ==========================================
-
   if (loading) {
     return (
       <div className="container text-center py-5">
@@ -154,10 +66,6 @@ function RoomsAndPrices() {
     );
   }
 
-  // ==========================================
-  // ERROR
-  // ==========================================
-
   if (error) {
     return (
       <div className="container py-5">
@@ -168,20 +76,12 @@ function RoomsAndPrices() {
     );
   }
 
-  // ==========================================
-  // PAGE
-  // ==========================================
-
-  return (
+ return (
     <div className="light-background min-vh-100 py-5">
       <div className="container">
         <h1 className="text-center dark-text fw-bold mb-5">
           Rooms & Prices
         </h1>
-
-        {/* ======================================
-            ROOM CARDS
-        ====================================== */}
 
         <div className="row g-4">
           {roomTypes.map((roomType) => (
@@ -211,7 +111,8 @@ function RoomsAndPrices() {
 
                   <button
                     className="btn accent-background dark-text fw-bold mt-auto"
-                    onClick={() => openBookingModal(roomType)}
+                   // onClick={() => openBookingModal(roomType)}
+                   onClick={() => openBookingOrLogin(roomType)}
                   >
                     Booking
                   </button>
@@ -221,20 +122,6 @@ function RoomsAndPrices() {
           ))}
         </div>
       </div>
-
-      {/* ======================================
-          AVAILABILITY MODAL
-      ====================================== */}
-
-      <BookingModal 
-        selectedRoomType={selectedRoomType}
-        isOpen={showModal}
-        onClose={closeBookingModal}
-      />
-
-      {/* ======================================
-          BOOKING DETAILS MODAL
-      ====================================== */}
 
     </div>
   );

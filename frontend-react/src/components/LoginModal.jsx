@@ -89,7 +89,7 @@ export default function LoginModal({isOpen, onClose}) {
           type="button"
           data-bs-dismiss="modal"
           aria-label="Close"
-          onClick={()=>onClose()}
+          data-bs-dismiss="modal"
         />
       </div>
 
@@ -103,6 +103,7 @@ export default function LoginModal({isOpen, onClose}) {
             Username
           </label>
           <input
+            placeholder="Enter your username"
             id="loginUsernameInput"
             className="form-control mb-2"
             name="userName"
@@ -116,6 +117,7 @@ export default function LoginModal({isOpen, onClose}) {
             Password
           </label>
           <input
+            placeholder="Enter your password"
             id="loginPasswordInput"
             className="form-control"
             name="password"
@@ -123,6 +125,12 @@ export default function LoginModal({isOpen, onClose}) {
             value={credentials.password}
             onChange={changeField}
             required
+            onMouseEnter={(e) =>{
+              e.currentTarget.type= "text";
+            }}
+            onMouseLeave={(e) =>{
+              e.currentTarget.type= "password";
+            }}
           />
         </div>
 

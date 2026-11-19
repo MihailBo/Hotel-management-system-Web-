@@ -73,7 +73,7 @@ public class RoomController {
 
     // TODO: DTO
     @GetMapping("/availability")
-    public ResponseEntity<?> checkAvailability(Long roomTypeId, String checkIn, String checkOut) {
+    public ResponseEntity<?> checkAvailability(@RequestParam Long roomTypeId, String checkIn, String checkOut) {
         return ResponseEntity.ok(roomService.checkAvailability(roomTypeId, checkIn, checkOut));
     }
 }

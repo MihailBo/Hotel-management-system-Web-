@@ -97,15 +97,11 @@ public class RoomService {
         // Броим само резервациите за стаи
         // от избрания тип
         long occupiedRooms = reservations.stream()
-                .filter(reservation ->
-                        rooms.stream().anyMatch(room ->
-                                room.getId().equals(
-                                        reservation.getRoom().getId()
-                                )
-                        )
-                )
+                .map(reservation -> reservation.getRoom().getId())
+                .distinct()
+                .filter(roomId -> rooms.stream()
+                        .anyMatch(room -> room.getId().equals(roomId)))
                 .count();
-
 
         int totalRooms = rooms.size();
 
