@@ -4,7 +4,6 @@ import {
   getRoomTypes,
   checkRoomAvailability
 } from "../API/roomTypeApi";
-import BookingModal from "../components/BookingModal"
 import { useModal } from "../context/ModalContext";
 
 function RoomsAndPrices() {

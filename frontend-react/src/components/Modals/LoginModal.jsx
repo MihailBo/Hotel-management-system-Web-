@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Modal } from "bootstrap";
 
-import { loginCustomer } from "../API/registerApi";
+import { loginCustomer } from "../../API/registerApi";
 
 export default function LoginModal({isOpen, onClose}) {
 

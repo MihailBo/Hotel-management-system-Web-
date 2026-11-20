@@ -1,8 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Menu } from "lucide-react";
+import { UserRound } from "lucide-react";
 
-import { logout } from "../API/registerApi";
 import { useModal } from "../context/ModalContext";
 
 export function Header() {
@@ -15,15 +15,7 @@ export function Header() {
     setLogged,
   } = useModal();
 
-  // LOGOUT
-  const handleLogout = async () => {
-    try {
-      await logout();
-      setLogged(false);
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+  
 
   return (
     <header className="dark-background">
@@ -188,15 +180,15 @@ export function Header() {
             </button>
 
             {/* LOG OUT */}
-            <button
-              id="logout-btn"
+            <Link
+            to="/settings"
               className="btn btn-nav-right accent-background dark-text accent-border hover-light-background"
               type="button"
-              onClick={handleLogout}
+              //onClick={handleLogout}
               style={{ display: logged ? "block" : "none" }}
             >
-              Log out
-            </button>
+             <UserRound size={24} strokeWidth={2} />
+            </Link>
 
           </div>
         </div>

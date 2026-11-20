@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import BookingModal from "../components/BookingModal";
-import LoginModal from "../components/LoginModal";
+import BookingModal from "../components/Modals/BookingModal";
+import LoginModal from "../components/Modals/LoginModal";
 import checkIfLogged from "../API/CheckIfLogged";
 
 const ModalContext = createContext(null);

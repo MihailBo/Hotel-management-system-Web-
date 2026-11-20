@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { createReservation } from "../API/reservationApi";
-import { checkRoomAvailability } from "../API/roomTypeApi";
+import { createReservation } from "../../API/reservationApi";
+import { checkRoomAvailability } from "../../API/roomTypeApi";
 
 export function BookingDetailsModal({selectedRoomType, availability, checkIn, checkOut,  isOpen, onClose}){
 

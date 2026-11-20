@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { createCustomer } from "../API/registerApi";
+import { createCustomer } from "../../API/registerApi";
 import { Modal } from "bootstrap";
 import LoginModal from "./LoginModal";
 
